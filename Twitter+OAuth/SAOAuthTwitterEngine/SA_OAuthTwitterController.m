@@ -147,7 +147,9 @@ static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
 		
 		_navBar = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0, 0, 480, 32)] autorelease];
 	} else {
-		self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 416)] autorelease];	
+        // self.view is full screen view without statusBar. This implementation
+        // use navbar as subview. So we should use screenSize - statusbar size = 460.
+		self.view = [[[UIView alloc] initWithFrame: CGRectMake(0, 0, 320, 460)] autorelease];
 		_backgroundView.frame =  CGRectMake(0, 44, 320, 416);
 		_navBar = [[[UINavigationBar alloc] initWithFrame: CGRectMake(0, 0, 320, 44)] autorelease];
 	}
@@ -357,7 +359,7 @@ Ugly. I apologize for its inelegance. Bleah.
 		[self denied];
 		return NO;
 	}
-	if (navigationType != UIWebViewNavigationTypeOther) _webView.alpha = 0.1;
+	if (navigationType != UIWebViewNavigationTypeOther) _webView.alpha = 0.0;
 	return YES;
 }
 
