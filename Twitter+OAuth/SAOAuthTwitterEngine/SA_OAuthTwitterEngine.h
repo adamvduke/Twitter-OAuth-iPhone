@@ -22,15 +22,17 @@
 @class OAToken;
 @class OAConsumer;
 
+typedef void (^RequestTokenSetCallback)();
+
 @interface SA_OAuthTwitterEngine : MGTwitterEngine {
 	NSString	*_consumerSecret;
 	NSString	*_consumerKey;
 	NSURL		*_requestTokenURL;
 	NSURL		*_accessTokenURL;
 	NSURL		*_authorizeURL;
-
-
 	NSString	*_pin;
+
+	RequestTokenSetCallback requestTokenSetCallback;
 
 @private
 	OAConsumer	*_consumer;
@@ -52,7 +54,7 @@
 
 
 - (void) requestAccessToken;
-- (void) requestRequestToken;
+- (void) requestRequestTokenWithCallback:(RequestTokenSetCallback)callback;
 - (void) clearAccessToken;
 
 @property (nonatomic, readwrite, retain)  NSString	*pin;

@@ -88,28 +88,33 @@ static NSString* const kGGTwitterLoadingBackgroundImage = @"twitter_load.png";
 	return ![engine isAuthorized];
 }
 
-
 - (id) initWithEngine: (SA_OAuthTwitterEngine *) engine andOrientation:(UIInterfaceOrientation)theOrientation {
 	if (self = [super init]) {
 		self.engine = engine;
-		if (!engine.OAuthSetup) [_engine requestRequestToken];
-		self.orientation = theOrientation;
-		_firstLoad = YES;
 		
 		if (UIInterfaceOrientationIsLandscape( self.orientation ) )
 			_webView = [[UIWebView alloc] initWithFrame: CGRectMake(0, 32, 480, 288)];
 		else
 			_webView = [[UIWebView alloc] initWithFrame: CGRectMake(0, 44, 320, 416)];
-		
+
+		if(!engine.OAuthSetup)
+		{
+			[_engine requestRequestTokenWithCallback:^{
+				/* this is the block that will be executed
+				 * when the request completes
+				 */
+				NSURLRequest *request = _engine.authorizeURLRequest;
+				[_webView loadRequest:request];
+			}];
+		}		
+		self.orientation = theOrientation;
+		_firstLoad = YES;
 		_webView.alpha = 0.0;
 		_webView.delegate = self;
 		_webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 		if ([_webView respondsToSelector: @selector(setDetectsPhoneNumbers:)]) [(id) _webView setDetectsPhoneNumbers: NO];
 		if ([_webView respondsToSelector: @selector(setDataDetectorTypes:)]) [(id) _webView setDataDetectorTypes: 0];
 		
-		NSURLRequest			*request = _engine.authorizeURLRequest;
-		[_webView loadRequest: request];
-
 		[[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(pasteboardChanged:) name: UIPasteboardChangedNotification object: nil];
 	}
 	return self;

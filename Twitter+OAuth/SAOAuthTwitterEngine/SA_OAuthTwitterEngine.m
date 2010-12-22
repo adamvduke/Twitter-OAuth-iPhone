@@ -113,7 +113,9 @@
 
 
 //A request token is used to eventually generate an access token
-- (void) requestRequestToken {
+- (void)requestRequestTokenWithCallback:(RequestTokenSetCallback)callback
+{
+	requestTokenSetCallback = [callback copy];
 	[self requestURL: self.requestTokenURL token: nil onSuccess: @selector(setRequestToken:withData:) onFail: @selector(outhTicketFailed:data:)];
 }
 
@@ -181,6 +183,10 @@
 	_requestToken = [[OAToken alloc] initWithHTTPResponseBody:dataString];
 	
 	if (self.pin.length) _requestToken.pin = self.pin;
+	if(requestTokenSetCallback)
+	{
+		requestTokenSetCallback();
+	}	
 }
 
 
