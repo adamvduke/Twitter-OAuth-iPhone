@@ -1,8 +1,18 @@
+Project:
+----------------
+
 Twitter+OAuth Source and Example for iPhone
 Glommed together by Ben Gottlieb
 copyright 2009 Stand Alone, Inc - all rights reserved.
+
+License:
+----------------
+
 License: BSD, If you use it, please include the following text somewhere in your application's user-facing text:
 "Includes Twitter+OAuth code by Ben Gottlieb"
+
+Purpose:
+----------------
 
 The goal of this was to create a drop-in code package for iPhone apps that want to access Twitter via OAuth. The main benefit here is that the source line on the Twitter page will say your app name, rather than "from web". 
 
@@ -15,18 +25,30 @@ Enjoy, and please let me know if you have any feedback!
 Ben Gottlieb
 ben@standalone.com
 
-== Major Changes Log ==
-2/24/10					- added additional PIN checks in case Twitter changes the way they pass the PIN back
-					- if all else fails, prompt the user to copy their PIN. The app will grab this and use it
-					- this last part only works on OS 3.x and later, Everything else should work fine on 2.x.
-					- integrated the latest build of MGTwitterEngine
+Changes:
+----------------
 
+2/24/10				
+     - added additional PIN checks in case Twitter changes the way they pass the PIN back
+     - if all else fails, prompt the user to copy their PIN. The app will grab this and use it
+     - this last part only works on OS 3.x and later, Everything else should work fine on 2.x.
+     - integrated the latest build of MGTwitterEngine
+					
+12/22/10 
+     - Moved the OAuthConsumer classes into a git submodule. 
+          The steps to get up and running are:
+          git clone git://github.com/adamvduke/Twitter-OAuth-iPhone.git
+          cd Twitter-OAuth-iPhone
+          git submodule init
+          git submodule update
 
 Example:
+----------------
+
 Use the project in the Demo folder. You'll need to replace the strings in Demo/Src/OAuthTwitterDemoViewController.m with your own consumer key and consumer secret (visit  http://twitter.com/oauth_clients/new to obtain these).
 
-
 Built using:
+----------------
 MGTwitterEngine by Matt Gemmell
 http://mattgemmell.com
 License:  http://mattgemmell.com/license

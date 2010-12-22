@@ -140,8 +140,8 @@
 	[_pin autorelease];
 	_pin = [pin retain];
 	
-	_accessToken.pin = pin;
-	_requestToken.pin = pin;
+	_accessToken.verifier = pin;
+	_requestToken.verifier = pin;
 }
 
 //=============================================================================================================================
@@ -150,7 +150,7 @@
     OAMutableURLRequest				*request = [[[OAMutableURLRequest alloc] initWithURL: url consumer: self.consumer token:token realm:nil signatureProvider: nil] autorelease];
 	if (!request) return;
 	
-	if (self.pin.length) token.pin = self.pin;
+	if (self.pin.length) token.verifier = self.pin;
     [request setHTTPMethod: @"POST"];
 	
     OADataFetcher				*fetcher = [[[OADataFetcher alloc] init] autorelease];	
@@ -182,7 +182,7 @@
 	[_requestToken release];
 	_requestToken = [[OAToken alloc] initWithHTTPResponseBody:dataString];
 	
-	if (self.pin.length) _requestToken.pin = self.pin;
+	if (self.pin.length) _requestToken.verifier = self.pin;
 	if(requestTokenSetCallback)
 	{
 		requestTokenSetCallback();

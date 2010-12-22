@@ -1,0 +1,3 @@
+[submodule "Twitter+OAuth/OAuthConsumer"]
+	path = Twitter+OAuth/OAuthConsumer
+	url = git://github.com/adamvduke/OAuthConsumer.git
